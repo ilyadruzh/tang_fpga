@@ -1,0 +1,40 @@
+sudo ./bflb_mcu_tool --chipname bl702 --port /dev/ttyUSB1 --xtal 32M --firmware /home/druzhcom/Documents/fpga/RV-Debugger-BL702_mod/main.bin
+[10:15:13.263] - ==================================================
+[10:15:13.263] - Chip name is bl702
+[10:15:13.263] - Serial port is /dev/ttyUSB0
+[10:15:13.263] - Baudrate is 115200
+[10:15:13.263] - Firmware is /home/druzhcom/Documents/fpga/RV-Debugger-BL702_mod/main.bin
+[10:15:13.263] - Default flash clock is 72M
+[10:15:13.263] - Default pll clock is 144M
+[10:15:13.263] - ==================================================
+[10:15:13.325] - Update flash cfg finished
+[10:15:13.330] - EFUSE_CFG
+[10:15:13.331] - BOOTHEADER_CFG
+[10:15:13.344] - Create bootheader using /home/druzhcom/Documents/fpga/bl_mcu_sdk/tools/bflb_flash_tool/chips/bl702/img_create_mcu/bootheader_cfg.ini
+[10:15:13.345] - Updating data according to </home/druzhcom/Documents/fpga/bl_mcu_sdk/tools/bflb_flash_tool/chips/bl702/img_create_mcu/bootheader_cfg.ini[BOOTHEADER_CFG]>
+[10:15:13.350] - Created file len:176
+[10:15:13.356] - Image create path: /home/druzhcom/Documents/fpga/bl_mcu_sdk/tools/bflb_flash_tool/chips/bl702/img_create_mcu
+[10:15:13.356] - Config file: /home/druzhcom/Documents/fpga/bl_mcu_sdk/tools/bflb_flash_tool/chips/bl702/img_create_mcu/img_create_cfg.ini
+[10:15:13.358] - Image hash is b'4d455359932e4dec8bd86bafb066f3c3bcd7aaaa826722ddb8341fb808c79def'
+[10:15:13.358] - Header crc: b'e59bba81'
+[10:15:13.358] - Write flash img
+[10:15:13.359] - ========= eflash loader config =========
+[10:15:13.378] - Version: bflb_eflash_loader_v2.1.2
+[10:15:13.378] - Program Start
+[10:15:13.378] - ========= eflash loader cmd arguments =========
+[10:15:13.378] - Config file: /home/druzhcom/Documents/fpga/bl_mcu_sdk/tools/bflb_flash_tool/chips/bl702/eflash_loader/eflash_loader_cfg.ini
+[10:15:13.380] - serial port is /dev/ttyUSB1
+[10:15:13.380] - chiptype: bl702
+[10:15:13.380] - ========= Interface is uart =========
+[10:15:13.380] - com speed: 115200
+[10:15:13.380] - Eflash load helper file: /home/druzhcom/Documents/fpga/bl_mcu_sdk/tools/bflb_flash_tool/chips/bl702/eflash_loader/eflash_loader_32m.bin
+[10:15:13.380] - Eflash load helper file: /home/druzhcom/Documents/fpga/bl_mcu_sdk/tools/bflb_flash_tool/chips/bl702/eflash_loader/eflash_loader_32m.bin
+[10:15:13.380] - ========= load eflash_loader.bin =========
+[10:15:13.380] - Load eflash_loader.bin via uart
+[10:15:13.380] - ========= image load =========
+[10:15:18.643] - [Errno 5] Input/output error
+[10:15:18.643] - {"ErrorCode": "0003","ErrorMsg":"BFLB LOAD HELP BIN FAIL"}
+[10:15:18.655] - Burn Retry
+[10:15:18.655] - 0
+[10:15:18.656] - Burn return with retry fail
+
