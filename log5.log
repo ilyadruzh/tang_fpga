@@ -1,0 +1,77 @@
+[14:20:58.380] - ==================================================
+[14:20:58.380] - Chip name is bl702
+[14:20:58.380] - Serial port is /dev/ttyUSB1
+[14:20:58.380] - Baudrate is 115200
+[14:20:58.380] - Firmware is firmware/main.bin
+[14:20:58.380] - Device Tree is None
+[14:20:58.380] - ==================================================
+[14:20:58.380] - Default flash clock is XCLK
+[14:20:58.380] - Default pll clock is 144M
+[14:20:58.384] - EFUSE_CFG
+[14:20:58.384] - BOOTHEADER_CFG
+[14:20:58.387] - Create bootheader using /home/druzhcom/.local/lib/python3.10/site-packages/bflb_mcu_tool/chips/bl702/img_create_mcu/efuse_bootheader_cfg.ini
+[14:20:58.387] - Updating data according to </home/druzhcom/.local/lib/python3.10/site-packages/bflb_mcu_tool/chips/bl702/img_create_mcu/efuse_bootheader_cfg.ini[BOOTHEADER_CFG]>
+[14:20:58.388] - Created file len:176
+[14:20:58.391] - Image create path: /home/druzhcom/.local/lib/python3.10/site-packages/bflb_mcu_tool/chips/bl702/img_create_mcu
+[14:20:58.391] - Config file: /home/druzhcom/.local/lib/python3.10/site-packages/bflb_mcu_tool/chips/bl702/img_create_mcu/img_create_cfg.ini
+[14:20:58.392] - Image hash is b'4d455359932e4dec8bd86bafb066f3c3bcd7aaaa826722ddb8341fb808c79def'
+[14:20:58.392] - Header crc: b'd4a09a83'
+[14:20:58.392] - Write flash img
+[14:20:58.393] - ========= eflash loader config =========
+[14:20:58.407] - Version: eflash_loader_v2.4.2
+[14:20:58.407] - Program Start
+[14:20:58.407] - ========= eflash loader cmd arguments =========
+[14:20:58.407] - None
+[14:20:58.407] - Config file: /home/druzhcom/.local/lib/python3.10/site-packages/bflb_mcu_tool/chips/bl702/eflash_loader/eflash_loader_cfg.ini
+[14:20:58.408] - serial port is /dev/ttyUSB1
+[14:20:58.408] - cpu_reset=False
+[14:20:58.408] - chiptype: bl702
+[14:20:58.408] - ========= Interface is uart =========
+[14:20:58.409] - com speed: 115200
+[14:20:58.409] - Eflash load helper file: /home/druzhcom/.local/lib/python3.10/site-packages/bflb_mcu_tool/chips/bl702/eflash_loader/eflash_loader_32m.bin
+[14:20:58.409] - ========= load eflash_loader.bin =========
+[14:20:58.409] - Load eflash_loader.bin via uart
+[14:20:58.409] - ========= image load =========
+[14:20:58.672] - tx rx and power off, press the machine!
+[14:20:58.672] - cutoff time is 0.05
+[14:20:58.722] - power on tx and rx
+[14:20:59.625] - reset cnt: 0, reset hold: 0.05, shake hand delay: 0.1
+[14:20:59.625] - clean buf
+[14:20:59.625] - send sync
+[14:20:59.726] - ack is b''
+[14:20:59.726] - retry
+[14:20:59.977] - tx rx and power off, press the machine!
+[14:20:59.978] - cutoff time is 0.05
+[14:21:00.028] - power on tx and rx
+[14:21:00.930] - reset cnt: 0, reset hold: 0.05, shake hand delay: 0.1
+[14:21:00.930] - clean buf
+[14:21:00.930] - send sync
+[14:21:01.031] - ack is b''
+[14:21:01.031] - retry
+[14:21:01.281] - tx rx and power off, press the machine!
+[14:21:01.281] - cutoff time is 0.05
+[14:21:01.332] - power on tx and rx
+[14:21:02.234] - reset cnt: 0, reset hold: 0.05, shake hand delay: 0.1
+[14:21:02.234] - clean buf
+[14:21:02.234] - send sync
+[14:21:02.335] - ack is b''
+[14:21:02.335] - retry
+[14:21:02.335] - shake hand fail
+[14:21:02.335] - ########################################################################
+[14:21:02.335] - 请按照以下描述排查问题：
+[14:21:02.335] - GPIO28是否上拉到板子自身的3.3V，而不是外部的3.3V
+[14:21:02.335] - GPIO15(RX)是否连接到USB转串口的TX引脚
+[14:21:02.335] - GPIO14(TX)是否连接到USB转串口的RX引脚
+[14:21:02.335] - 在使用烧录软件进行烧录前，是否在GPIO28拉高的情况下，使用Reset/Chip_En复位了芯片
+[14:21:02.335] - 烧录软件所选择的COM口，是否是连接芯片的串口
+[14:21:02.335] - 烧录软件上选择的波特率是否是USB转串口支持的波特率
+[14:21:02.335] - 3.3V供电是否正常
+[14:21:02.335] - 板子供电电流是否正常(烧录模式下，芯片耗电电流5-7mA)
+[14:21:02.335] - ########################################################################
+[14:21:02.335] - shake hand fail
+[14:21:02.337] - Load helper bin time cost(ms): 3928.260009765625
+[14:21:02.337] - {"ErrorCode": "0050","ErrorMsg":"BFLB IMG LOAD SHAKEHAND FAIL"}
+[14:21:02.337] - {"ErrorCode": "0003","ErrorMsg":"BFLB LOAD HELP BIN FAIL"}
+[14:21:02.337] - Burn Retry
+[14:21:02.337] - 0
+[14:21:02.338] - Burn return with retry fail

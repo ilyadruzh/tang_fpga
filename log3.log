@@ -1,0 +1,75 @@
+[12:52:59.846] - ==================================================
+[12:52:59.846] - Chip name is bl702
+[12:52:59.846] - Serial port is /dev/ttyUSB0
+[12:52:59.846] - Baudrate is 115200
+[12:52:59.846] - Firmware is firmware/main.bin
+[12:52:59.846] - Default flash clock is 72M
+[12:52:59.846] - Default pll clock is 144M
+[12:52:59.847] - ==================================================
+[12:52:59.907] - Update flash cfg finished
+[12:52:59.910] - EFUSE_CFG
+[12:52:59.910] - BOOTHEADER_CFG
+[12:52:59.917] - Create bootheader using /home/druzhcom/Documents/code/ilyadruzh/tang_prime_20k/tools/chips/bl702/img_create_mcu/bootheader_cfg.ini
+[12:52:59.917] - Updating data according to </home/druzhcom/Documents/code/ilyadruzh/tang_prime_20k/tools/chips/bl702/img_create_mcu/bootheader_cfg.ini[BOOTHEADER_CFG]>
+[12:52:59.920] - Created file len:176
+[12:52:59.926] - Image create path: /home/druzhcom/Documents/code/ilyadruzh/tang_prime_20k/tools/chips/bl702/img_create_mcu
+[12:52:59.926] - Config file: /home/druzhcom/Documents/code/ilyadruzh/tang_prime_20k/tools/chips/bl702/img_create_mcu/img_create_cfg.ini
+[12:52:59.927] - Image hash is b'4d455359932e4dec8bd86bafb066f3c3bcd7aaaa826722ddb8341fb808c79def'
+[12:52:59.927] - Header crc: b'e59bba81'
+[12:52:59.927] - Write flash img
+[12:52:59.928] - ========= eflash loader config =========
+[12:52:59.944] - Version: bflb_eflash_loader_v2.1.2
+[12:52:59.944] - Program Start
+[12:52:59.944] - ========= eflash loader cmd arguments =========
+[12:52:59.944] - Config file: /home/druzhcom/Documents/code/ilyadruzh/tang_prime_20k/tools/chips/bl702/eflash_loader/eflash_loader_cfg.ini
+[12:52:59.945] - serial port is /dev/ttyUSB1
+[12:52:59.945] - chiptype: bl702
+[12:52:59.945] - ========= Interface is uart =========
+[12:52:59.945] - com speed: 115200
+[12:52:59.945] - Eflash load helper file: /home/druzhcom/Documents/code/ilyadruzh/tang_prime_20k/tools/chips/bl702/eflash_loader/eflash_loader_32m.bin
+[12:52:59.945] - Eflash load helper file: /home/druzhcom/Documents/code/ilyadruzh/tang_prime_20k/tools/chips/bl702/eflash_loader/eflash_loader_32m.bin
+[12:52:59.945] - ========= load eflash_loader.bin =========
+[12:52:59.945] - Load eflash_loader.bin via uart
+[12:52:59.945] - ========= image load =========
+[12:53:03.138] - tx rx and power off, press the machine!
+[12:53:03.138] - cutoff time is 0.05
+[12:53:03.188] - power on tx and rx
+[12:53:04.092] - reset cnt: 0, reset hold: 0.05, shake hand delay: 0.1
+[12:53:04.092] - clean buf
+[12:53:04.092] - send sync
+[12:53:04.192] - ack is b''
+[12:53:04.192] - retry
+[12:53:08.538] - tx rx and power off, press the machine!
+[12:53:08.538] - cutoff time is 0.05
+[12:53:08.588] - power on tx and rx
+[12:53:09.493] - reset cnt: 0, reset hold: 0.05, shake hand delay: 0.1
+[12:53:09.493] - clean buf
+[12:53:09.493] - send sync
+[12:53:09.594] - ack is b''
+[12:53:09.594] - retry
+[12:53:09.845] - tx rx and power off, press the machine!
+[12:53:09.845] - cutoff time is 0.05
+[12:53:09.895] - power on tx and rx
+[12:53:10.799] - reset cnt: 0, reset hold: 0.05, shake hand delay: 0.1
+[12:53:10.800] - clean buf
+[12:53:10.800] - send sync
+[12:53:10.901] - ack is b''
+[12:53:10.901] - retry
+[12:53:10.901] - shake hand fail
+[12:53:10.901] - ########################################################################
+[12:53:10.901] - 请按照以下描述排查问题：
+[12:53:10.901] - GPIO28是否上拉到板子自身的3.3V，而不是外部的3.3V
+[12:53:10.901] - GPIO15(RX)是否连接到USB转串口的TX引脚
+[12:53:10.901] - GPIO14(TX)是否连接到USB转串口的RX引脚
+[12:53:10.901] - 在使用烧录软件进行烧录前，是否在GPIO28拉高的情况下，使用Reset/Chip_En复位了芯片
+[12:53:10.901] - 烧录软件所选择的COM口，是否是连接芯片的串口
+[12:53:10.901] - 烧录软件上选择的波特率是否是USB转串口支持的波特率
+[12:53:10.901] - 3.3V供电是否正常
+[12:53:10.901] - 板子供电电流是否正常(烧录模式下，芯片耗电电流5-7mA)
+[12:53:10.901] - ########################################################################
+[12:53:10.901] - shake hand fail
+[12:53:14.998] - Load helper bin time cost(ms): 15052.5751953125
+[12:53:14.998] - {"ErrorCode": "0003","ErrorMsg":"BFLB LOAD HELP BIN FAIL"}
+[12:53:14.998] - Burn Retry
+[12:53:14.998] - 0
+[12:53:14.999] - Burn return with retry fail
