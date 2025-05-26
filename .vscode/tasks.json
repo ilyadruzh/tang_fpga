@@ -10,7 +10,7 @@
                 // "-e", "DISPLAY=${DISPLAY}", "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
                 "-v", "${workspaceFolder}:/home/gowin/work",
                 "gowin-docker",
-                "bash", "-c", "xvfb-run /home/gowin/IDE/bin/gw_sh work.prj"
+                "bash", "-c", "xvfb-run -a /home/gowin/IDE/bin/gw_sh /home/gowin/work/work.prj"
                 // "/home/gowin/IDE/bin/gw_sh", // путь до gw_sh внутри контейнера
                 // "work.prj" // имя вашего проектного файла, например
               ],

@@ -1,11 +1,11 @@
 GowinSynthesis start
 Running parser ...
 Analyzing Verilog file '/home/gowin/work/src/blinky.v'
-Compiling module 'blinky'("/home/gowin/work/src/blinky.v":1)
-NOTE  (EX0101) : Current top module is "blinky"
-WARN  (EX0211) : The output port "IO_voltage" of module "blinky" has no driver, assigning undriven bits to Z, simulation mismatch possible("/home/gowin/work/src/blinky.v":3)
+Compiling module 'blink'("/home/gowin/work/src/blinky.v":2)
+NOTE  (EX0101) : Current top module is "blink"
+WARN  (EX0211) : The output port "IO_voltage" of module "blink" has no driver, assigning undriven bits to Z, simulation mismatch possible("/home/gowin/work/src/blinky.v":6)
 [5%] Running netlist conversion ...
-WARN  (CV0016) : Input clock is unused("/home/gowin/work/src/blinky.v":2)
+WARN  (CV0016) : Input clock is unused("/home/gowin/work/src/blinky.v":4)
 Running device independent optimization ...
 [10%] Optimizing Phase 0 completed
 [15%] Optimizing Phase 1 completed
