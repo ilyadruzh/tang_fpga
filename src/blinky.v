@@ -1,36 +1,45 @@
-module blinky (
+// Модуль мигания светодиода
+module blink (
+    // Входной тактовый сигнал
     input wire clock,
+    // Выход для управления уровнем IO
     output reg IO_voltage
 );
-/********** Counter **********/
-//parameter Clock_frequency = 27_000_000; // Crystal oscillator frequency is 27Mhz
-parameter count_value       = 13_499_999; // The number of times needed to time 0.5S
+/********** Счётчик **********/
+//parameter Clock_frequency = 27_000_000; // Частота кварцевого резонатора 27 МГц
+parameter count_value       = 13_499_999; // Количество тактов для 0.5 секунды
 
-reg [23:0]  count_value_reg ; // counter_value
-reg         count_value_flag; // IO change flag
+// Регистр счётчика
+reg [23:0]  count_value_reg ; // текущее значение счётчика
+// Флаг, указывающий на необходимость смены уровня на выводе
+reg         count_value_flag; 
 
+// Процесс подсчёта времени
 always @(posedge clock) begin
-    if ( count_value_reg <= count_value ) begin //not count to 0.5S
-        count_value_reg  <= count_value_reg + 1'b1; // Continue counting
-        count_value_flag <= 1'b0 ; // No flip flag
+    // Если время ещё не истекло
+    if ( count_value_reg <= count_value ) begin
+        count_value_reg  <= count_value_reg + 1'b1; // продолжаем счёт
+        count_value_flag <= 1'b0 ;                  // флаг не выставляем
     end
-    else begin //Count to 0.5S
-        count_value_reg  <= 23'b0; // Clear counter,prepare for next time counting.
-        count_value_flag <= 1'b1 ; // Flip flag
+    else begin
+        // Время истекло: сбрасываем счётчик
+        count_value_reg  <= 23'b0;
+        count_value_flag <= 1'b1 ;                  // устанавливаем флаг
     end
 end
 
-/********** IO voltage flip **********/
-reg IO_voltage_reg = 1'b0; // Initial state
+/********** Переключение уровня IO **********/
+reg IO_voltage_reg = 1'b0; // начальное состояние
 
+// Процесс смены уровня
 always @(posedge clock) begin
-    if ( count_value_flag )  //  Flip flag 
-        IO_voltage_reg <= ~IO_voltage_reg; // IO voltage flip
-    else //  No flip flag
-        IO_voltage_reg <= IO_voltage_reg; // IO voltage constant
+    if ( count_value_flag )  // при выставленном флаге
+        IO_voltage_reg <= ~IO_voltage_reg; // инвертируем уровень
+    else                    // иначе
+        IO_voltage_reg <= IO_voltage_reg; // оставляем без изменений
 end
 
-/***** Add an extra line of code *****/
-// assign IO_voltage = IO_voltage_reg;
+/***** Вывод значения на контакт *****/
+assign IO_voltage = IO_voltage_reg;
 
 endmodule
