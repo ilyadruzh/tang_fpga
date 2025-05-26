@@ -1,6 +1,6 @@
 module blink (
     input wire clock,
-    output reg led IO_voltage
+    output reg IO_voltage
 );
 /********** Counter **********/
 //parameter Clock_frequency = 27_000_000; // Crystal oscillator frequency is 27Mhz
