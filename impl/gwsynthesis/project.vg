@@ -1,0 +1,35 @@
+//
+//Written by GowinSynthesis
+//Tool Version "V1.9.11.01 Education"
+//Mon May 26 16:57:46 2025
+
+//Source file index table:
+//file0 "\/home/gowin/work/src/blinky.v"
+`pragma protect begin_protected
+`pragma protect version="2.3"
+`pragma protect author="default"
+`pragma protect author_info="default"
+`pragma protect encrypt_agent="GOWIN"
+`pragma protect encrypt_agent_info="GOWIN Encrypt Version 2.3"
+
+`pragma protect encoding=(enctype="base64", line_length=76, bytes=256)
+`pragma protect key_keyowner="GOWIN",key_keyname="GWK2023-09",key_method="rsa"
+`pragma protect key_block
+Eqgc4+T+NZOwwhP/l3RlQN9dw6XII3b1m0dG6na7Ju8Yf680BHaz48UcoV5E8D7C7E0sCN5c1Nvl
+aIWSCWJuLCccVKyk/IYZn7qXQirnvIhLPuLUoFMCxJrOrtKZyG+Rw1i4wpQqsSBB9roeaAfUUgTb
+NV9TFx3zXUrjRQrvYLRnN61Fjq5exGxmZy7tbeBzYnKd/JHF5LMk6owO2uMAFgICbkEBQjIxZT0g
+jg2B9quOxAdbLE4IAihfvq5z2GPYumeNYayFXW/mGRyr8Ow4dwgencl6zWfmbTqtD2nvKqEOHr+x
+XrVwU9mbOx8lDlTTNO8fHOkK0Jaq0B+rX/bZhw==
+
+`pragma protect encoding=(enctype="base64", line_length=76, bytes=336)
+`pragma protect data_keyowner="default-ip-vendor"
+`pragma protect data_keyname="default-ip-key"
+`pragma protect data_method="aes128-cfb"
+`pragma protect data_block
+DhJ6N+ecmjztaoug45Jsx0+F4GcHxvRTKZkMAuCHGcisr8evX7rEn0cqGKmq/HLAa2PaN7yxLDkJ
+ZXfgMH7MbYH6ue9552RzLAalHa09dXyFUSrz3iBe/v7lHKIuvG0DMZnfgRk9QZaHtNdxWb6gJEkM
+Akz8e85kIEubHX/kd0GP7fGEKsKjIyj5Wxuq3i27RdTU5DbvijkmjsNJ65YNQwwNPf8wp85xcpIH
+MrV15t+Nr4aK3leM+49m/ljTTVNLWVBSYhL03yNLXCBy0RKHlBYaZ3f3Di1C3xzBtVaPXkmuCg8k
+2C+K5QMew1JvxPXQACuflXjoroqMSbbylwinm+1cRdRMVchB4rE2KDDjhnqfdD2W3YHJPRTGoYXb
+tIciuyAPupWlrOhEq3X/FkkVcjwpCa7PwP4SFitUaM3s1xrdQnKBx5sKFshAajaLX7hN
+`pragma protect end_protected

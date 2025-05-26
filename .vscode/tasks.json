@@ -6,8 +6,8 @@
             "type": "shell",
             "command": "docker",
             "args": [
-                "run", "--rm", "-t",
-                "-e", "DISPLAY=${DISPLAY}", "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+                "run", "--rm", "-it",
+                // "-e", "DISPLAY=${DISPLAY}", "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
                 "-v", "${workspaceFolder}:/home/gowin/work",
                 "gowin-docker",
                 "bash", "-c", "xvfb-run /home/gowin/IDE/bin/gw_sh work.prj"

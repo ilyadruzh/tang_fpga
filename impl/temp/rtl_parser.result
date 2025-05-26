@@ -1,0 +1,10 @@
+[
+ {
+  "InstFile" : "/home/gowin/work/src/blinky.v",
+  "InstLine" : 1,
+  "InstName" : "blinky",
+  "ModuleFile" : "/home/gowin/work/src/blinky.v",
+  "ModuleLine" : 1,
+  "ModuleName" : "blinky"
+ }
+]

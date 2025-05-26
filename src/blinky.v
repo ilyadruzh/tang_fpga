@@ -1,4 +1,4 @@
-module blink (
+module blinky (
     input wire clock,
     output reg IO_voltage
 );
@@ -31,6 +31,6 @@ always @(posedge clock) begin
 end
 
 /***** Add an extra line of code *****/
-assign IO_voltage = IO_voltage_reg;
+// assign IO_voltage = IO_voltage_reg;
 
 endmodule
