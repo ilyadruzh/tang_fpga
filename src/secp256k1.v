@@ -1,179 +1,201 @@
-// Simplified secp256k1 key generation module // комментарий
-// Generates a random private key and computes the corresponding public key // комментарий
-// using a behavioral double-and-add algorithm. This code is intended for // комментарий
-// demonstration purposes and is not optimised for synthesis. // комментарий
- // пустая строка
-`timescale 1ns/1ps // задание временной базы
- // пустая строка
-module secp256k1_keygen( // начало описания модуля
-    input wire        clk, // описание входа
-    input wire        rst, // описание входа
-    input wire        start, // описание входа
-    output reg        done, // описание выхода
-    output reg [255:0] priv_key, // описание выхода
-    output reg [255:0] pub_key_x, // описание выхода
-    output reg [255:0] pub_key_y // описание выхода
-); // конец объявления модуля
- // пустая строка
-    // Parameters of the secp256k1 curve // комментарий
-    localparam P  = 256'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F; // параметр кривой
-    localparam GX = 256'h79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798; // параметр кривой
-    localparam GY = 256'h483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8; // параметр кривой
- // пустая строка
-    reg [255:0] k; // внутренний регистр
-    reg [255:0] x1, y1, x2, y2; // внутренний регистр
-    reg [255:0] t1, t2, inv; // внутренний регистр
-    reg [8:0]   bitpos; // внутренний регистр
-    reg         running; // внутренний регистр
- // пустая строка
-    // Simple LFSR for pseudo-random private key generation // комментарий
-    always @(posedge clk or posedge rst) begin // процедурный блок
-        if (rst) begin // условная проверка
-            k <= 256'h1; // операция
-        end else if (start && !running) begin // завершение блока
-            // Seed with non-zero value // комментарий
-            k <= {k[254:0], k[255] ^ k[62] ^ k[51] ^ k[38]}; // операция
-        end else if (running) begin // завершение блока
-            k <= {k[254:0], k[255] ^ k[62] ^ k[51] ^ k[38]}; // операция
-        end // завершение блока
-    end // завершение блока
- // пустая строка
-    // Modular addition // комментарий
-    function [255:0] mod_add; // объявление функции
-        input [255:0] a; // описание входа
-        input [255:0] b; // описание входа
-        reg [256:0] sum; // внутренний регистр
-        begin // операция
-            sum = a + b; // операция
-            if (sum >= P) // условная проверка
-                mod_add = sum - P; // операция
-            else // ветка else
-                mod_add = sum[255:0]; // операция
-        end // завершение блока
-    endfunction // завершение блока
- // пустая строка
-    // Modular subtraction // комментарий
-    function [255:0] mod_sub; // объявление функции
-        input [255:0] a; // описание входа
-        input [255:0] b; // описание входа
-        begin // операция
-            if (a >= b) // условная проверка
-                mod_sub = a - b; // операция
-            else // ветка else
-                mod_sub = P - (b - a); // операция
-        end // завершение блока
-    endfunction // завершение блока
- // пустая строка
-    // Modular multiplication (naive shift-add) // комментарий
-    function [255:0] mod_mul; // объявление функции
-        input [255:0] a; // описание входа
-        input [255:0] b; // описание входа
-        integer i; // операция
-        reg [511:0] prod; // внутренний регистр
-        begin // операция
-            prod = 0; // операция
-            for (i = 0; i < 256; i = i + 1) begin // операция
-                if (b[i]) // условная проверка
-                    prod = prod + (a << i); // операция
-            end // завершение блока
-            // Reduce modulo P // комментарий
-            for (i = 511; i >= 256; i = i - 1) begin // операция
-                if (prod[i]) // условная проверка
-                    prod = prod - (P << (i-256)); // операция
-            end // завершение блока
-            if (prod[255:0] >= P) // условная проверка
-                mod_mul = prod[255:0] - P; // операция
-            else // ветка else
-                mod_mul = prod[255:0]; // операция
-        end // завершение блока
-    endfunction // завершение блока
- // пустая строка
-    // Modular inverse using Fermat's little theorem (a^(p-2) mod p) // комментарий
-    function [255:0] mod_inv; // объявление функции
-        input [255:0] a; // описание входа
-        reg [255:0] r; // внутренний регистр
-        integer i; // операция
-        begin // операция
-            r = a; // операция
-            for (i = 0; i < 254; i = i + 1) // операция
-                r = mod_mul(mod_mul(r, r), a); // операция
-            mod_inv = r; // операция
-        end // завершение блока
-    endfunction // завершение блока
- // пустая строка
-    // Point addition for Jacobian coordinates simplified for a=0 // комментарий
-    task point_add; // объявление задачи
-        input [255:0] ax; // описание входа
-        input [255:0] ay; // описание входа
-        input [255:0] bx; // описание входа
-        input [255:0] by; // описание входа
-        output [255:0] rx; // описание выхода
-        output [255:0] ry; // описание выхода
-        reg [255:0] lambda; // внутренний регистр
-        begin // операция
-            if (ax == bx && ay == by) begin // условная проверка
-                // Point doubling // комментарий
-                lambda = mod_mul(mod_mul(256'd3, mod_mul(ax, ax)), // операция
-                                 mod_inv(mod_mul(256'd2, ay))); // операция
-            end else begin // завершение блока
-                lambda = mod_mul(mod_sub(by, ay), mod_inv(mod_sub(bx, ax))); // операция
-            end // завершение блока
-            rx = mod_sub(mod_sub(mod_mul(lambda, lambda), ax), bx); // операция
-            ry = mod_sub(mod_mul(lambda, mod_sub(ax, rx)), ay); // операция
-        end // завершение блока
-    endtask // завершение блока
- // пустая строка
-    // Double-and-add scalar multiplication // комментарий
-    task scalar_mult; // объявление задачи
-        input [255:0] d; // описание входа
-        output [255:0] rx; // описание выхода
-        output [255:0] ry; // описание выхода
-        reg [255:0] qx; // внутренний регистр
-        reg [255:0] qy; // внутренний регистр
-        integer i; // операция
-        begin // операция
-            qx = 0; // операция
-            qy = 0; // операция
-            rx = GX; // операция
-            ry = GY; // операция
-            for (i = 255; i >= 0; i = i - 1) begin // операция
-                if (d[i]) begin // условная проверка
-                    if (qx == 0 && qy == 0) begin // условная проверка
-                        qx = rx; // операция
-                        qy = ry; // операция
-                    end else begin // завершение блока
-                        point_add(qx, qy, rx, ry, qx, qy); // операция
-                    end // завершение блока
-                end // завершение блока
-                point_add(rx, ry, rx, ry, rx, ry); // операция
-            end // завершение блока
-            rx = qx; // операция
-            ry = qy; // операция
-        end // завершение блока
-    endtask // завершение блока
- // пустая строка
-    // State machine // комментарий
-    always @(posedge clk or posedge rst) begin // процедурный блок
-        if (rst) begin // условная проверка
-            done    <= 0; // операция
-            running <= 0; // операция
-            bitpos  <= 0; // операция
-            priv_key <= 0; // операция
-            pub_key_x <= 0; // операция
-            pub_key_y <= 0; // операция
-        end else begin // завершение блока
-            if (start && !running) begin // условная проверка
-                running  <= 1; // операция
-                done     <= 0; // операция
-                priv_key <= k; // операция
-                scalar_mult(k, pub_key_x, pub_key_y); // операция
-                done <= 1; // операция
-                running <= 0; // операция
-            end else begin // завершение блока
-                done <= 0; // операция
-            end // завершение блока
-        end // завершение блока
-    end // завершение блока
- // пустая строка
-endmodule // завершение блока
- // пустая строка
+`timescale 1ns/1ps // единицы времени и точность моделирования
+
+// Генерация стойких ключей secp256k1
+module secp256k1_keygen(
+    input  wire        clk,              // тактовый сигнал
+    input  wire        rst,              // асинхронный сброс
+    input  wire        start,            // запрос на начало генерации
+    input  wire        entropy_valid,    // флаг наличия данных энтропии
+    input  wire [31:0] entropy_data,     // 32‑битные случайные данные
+    output reg         done,             // флаг окончания работы
+    output reg  [255:0] priv_key,        // закрытый ключ
+    output reg  [255:0] pub_key_x,       // X‑координата открытого ключа
+    output reg  [255:0] pub_key_y        // Y‑координата открытого ключа
+); // конец описания портов
+
+    // Параметры поля secp256k1
+    localparam P = 256'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F; // простое число поля
+    localparam N = 256'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141; // порядок базовой точки
+    localparam GX = 256'h79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798; // X‑координата базовой точки
+    localparam GY = 256'h483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8; // Y‑координата базовой точки
+
+    // Состояния автомата
+    localparam S_IDLE     = 2'd0; // ожидание команды
+    localparam S_COLLECT  = 2'd1; // сбор энтропии
+    localparam S_COMPUTE  = 2'd2; // вычисление открытого ключа
+    localparam S_DONE     = 2'd3; // завершение
+
+    reg [1:0] state;        // текущие состояние
+    reg [2:0] word_count;   // количество полученных 32‑битных слов
+
+    // Вспомогательные регистры для вычислений
+    reg [255:0] k;          // рабочая переменная для закрытого ключа
+    reg [255:0] x1, y1;     // первая точка
+    reg [255:0] x2, y2;     // вторая точка
+
+    // Функция модульного сложения
+    function [255:0] mod_add;
+        input [255:0] a; // первое слагаемое
+        input [255:0] b; // второе слагаемое
+        reg [256:0] s;   // промежуточная сумма
+        begin
+            s = a + b;                      // складываем
+            if (s >= P)                     // если сумма вышла за пределы поля
+                mod_add = s - P;            // вычитаем модуль
+            else
+                mod_add = s[255:0];         // иначе возвращаем результат
+        end
+    endfunction
+
+    // Функция модульного вычитания
+    function [255:0] mod_sub;
+        input [255:0] a; // уменьшаемое
+        input [255:0] b; // вычитаемое
+        begin
+            if (a >= b)                     // если уменьшаемое больше
+                mod_sub = a - b;            // просто вычитаем
+            else
+                mod_sub = P - (b - a);      // иначе берём значение по модулю
+        end
+    endfunction
+
+    // Функция модульного умножения (наивная)
+    function [255:0] mod_mul;
+        input [255:0] a; // первый множитель
+        input [255:0] b; // второй множитель
+        integer i;       // счётчик цикла
+        reg [511:0] p;   // промежуточное произведение
+        begin
+            p = 0;
+            for (i = 0; i < 256; i = i + 1) begin // перебираем биты
+                if (b[i])                         // если бит установлен
+                    p = p + (a << i);             // добавляем сдвинутый множитель
+            end
+            for (i = 511; i >= 256; i = i - 1) begin // редукция
+                if (p[i])
+                    p = p - (P << (i-256));
+            end
+            if (p[255:0] >= P)
+                mod_mul = p[255:0] - P;          // окончательная коррекция
+            else
+                mod_mul = p[255:0];
+        end
+    endfunction
+
+    // Функция возведения в степень p-2 (обратный элемент)
+    function [255:0] mod_inv;
+        input [255:0] a; // аргумент
+        reg [255:0] r;  // промежуточный результат
+        integer i;      // счётчик
+        begin
+            r = a;
+            for (i = 0; i < 254; i = i + 1)
+                r = mod_mul(mod_mul(r, r), a); // квадрат и умножение
+            mod_inv = r;                       // возвращаем обратное значение
+        end
+    endfunction
+
+    // Удвоение точки на кривой
+    task point_double;
+        input  [255:0] ax; // X входной точки
+        input  [255:0] ay; // Y входной точки
+        output [255:0] rx; // X результата
+        output [255:0] ry; // Y результата
+        reg [255:0] l;     // наклон касательной
+        begin
+            l  = mod_mul(mod_mul(256'd3, mod_mul(ax, ax)), mod_inv(mod_mul(256'd2, ay))); // расчёт наклона
+            rx = mod_sub(mod_mul(l, l), mod_mul(256'd2, ax));                              // координата X
+            ry = mod_sub(mod_mul(l, mod_sub(ax, rx)), ay);                                // координата Y
+        end
+    endtask
+
+    // Сложение двух точек
+    task point_add;
+        input  [255:0] ax; // X первой точки
+        input  [255:0] ay; // Y первой точки
+        input  [255:0] bx; // X второй точки
+        input  [255:0] by; // Y второй точки
+        output [255:0] rx; // X результата
+        output [255:0] ry; // Y результата
+        reg [255:0] l;     // наклон секущей
+        begin
+            if (ax == bx && ay == by) begin
+                point_double(ax, ay, rx, ry);   // если точки совпадают, удваиваем
+            end else begin
+                l  = mod_mul(mod_sub(by, ay), mod_inv(mod_sub(bx, ax))); // наклон прямой
+                rx = mod_sub(mod_sub(mod_mul(l, l), ax), bx);             // координата X
+                ry = mod_sub(mod_mul(l, mod_sub(ax, rx)), ay);            // координата Y
+            end
+        end
+    endtask
+
+    // Умножение точки на скаляр (алгоритм лестницы Монтгомери)
+    task scalar_mult;
+        input  [255:0] d;  // скаляр
+        output [255:0] rx; // X результата
+        output [255:0] ry; // Y результата
+        reg [255:0] x0, y0; // точка R0
+        reg [255:0] x1, y1; // точка R1
+        integer i;          // счётчик
+        begin
+            x0 = 0; y0 = 0;         // бесконечность
+            x1 = GX; y1 = GY;       // базовая точка
+            for (i = 255; i >= 0; i = i - 1) begin
+                if (d[i] == 1'b0) begin
+                    point_add(x1, y1, x0, y0, x1, y1); // R1 = R1 + R0
+                    point_double(x0, y0, x0, y0);      // R0 = 2*R0
+                end else begin
+                    point_add(x0, y0, x1, y1, x0, y0); // R0 = R0 + R1
+                    point_double(x1, y1, x1, y1);      // R1 = 2*R1
+                end
+            end
+            rx = x0;
+            ry = y0;
+        end
+    endtask
+
+    // Автомат управления
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            state      <= S_IDLE;   // сброс в начальное состояние
+            done       <= 1'b0;     // сбрасываем флаг готовности
+            priv_key   <= 256'b0;   // обнуляем ключ
+            pub_key_x  <= 256'b0;   // обнуляем X
+            pub_key_y  <= 256'b0;   // обнуляем Y
+            word_count <= 3'b0;     // счётчик слов энтропии
+        end else begin
+            case (state)
+                S_IDLE: begin
+                    done <= 1'b0;                 // сброс флага
+                    if (start) begin              // при команде старт
+                        word_count <= 3'd0;       // обнуляем счётчик
+                        state      <= S_COLLECT;  // переходим к сбору энтропии
+                    end
+                end
+
+                S_COLLECT: begin
+                    if (entropy_valid) begin
+                        priv_key <= {priv_key[223:0], entropy_data}; // сдвигаем и добавляем данные
+                        word_count <= word_count + 1'b1;             // увеличиваем счётчик
+                        if (word_count == 3'd7) begin                // набрали восемь слов
+                            if (priv_key >= N)
+                                priv_key <= priv_key - N;            // приведение к диапазону
+                            state <= S_COMPUTE;                      // переходим к вычислению
+                        end
+                    end
+                end
+
+                S_COMPUTE: begin
+                    scalar_mult(priv_key, pub_key_x, pub_key_y);     // вычисляем открытый ключ
+                    state <= S_DONE;                                 // завершаем
+                end
+
+                S_DONE: begin
+                    done  <= 1'b1;                                   // ставим флаг готовности
+                    state <= S_IDLE;                                 // возвращаемся в ожидание
+                end
+            endcase
+        end
+    end
+
+endmodule
