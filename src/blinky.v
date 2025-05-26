@@ -40,6 +40,6 @@ always @(posedge clock) begin
 end
 
 /***** Вывод значения на контакт *****/
-assign IO_voltage = IO_voltage_reg;
+// assign IO_voltage = IO_voltage_reg;
 
 endmodule

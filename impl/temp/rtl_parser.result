@@ -1,10 +1,10 @@
 [
  {
   "InstFile" : "/home/gowin/work/src/blinky.v",
-  "InstLine" : 1,
-  "InstName" : "blinky",
+  "InstLine" : 2,
+  "InstName" : "blink",
   "ModuleFile" : "/home/gowin/work/src/blinky.v",
-  "ModuleLine" : 1,
-  "ModuleName" : "blinky"
+  "ModuleLine" : 2,
+  "ModuleName" : "blink"
  }
 ]
