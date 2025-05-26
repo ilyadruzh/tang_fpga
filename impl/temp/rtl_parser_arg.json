@@ -1,7 +1,8 @@
 {
+ "Device" : "GW2A-18C",
  "Files" : [
   {
-   "Path" : "/home/druzhcom/Documents/code/ilyadruzh/tang_prime_20k/src/led.v",
+   "Path" : "/home/gowin/work/src/led.v",
    "Type" : "verilog"
   }
  ],
@@ -9,7 +10,7 @@
 
  ],
  "LoopLimit" : 2000,
- "ResultFile" : "/home/druzhcom/Documents/code/ilyadruzh/tang_prime_20k/impl/temp/rtl_parser.result",
+ "ResultFile" : "/home/gowin/work/impl/temp/rtl_parser.result",
  "Top" : "",
  "VerilogStd" : "verilog_2001",
  "VhdlStd" : "vhdl_93"
