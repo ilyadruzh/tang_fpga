@@ -13,7 +13,7 @@ RUN apt update && apt install -y \
     libxcb-render0 libxcb-render-util0 libxcb-randr0 libxcb-shape0 \
     libxcb-shm0 libxcb-xfixes0 libxcb-xinerama0 libxcb-xinput0 \
     libxkbcommon-x11-0 qt5-default qtbase5-dev qtbase5-dev-tools \
-    qt5-qmake qtbase5-dev-tools
+    qt5-qmake qtbase5-dev-tools xvfb
 
 # 🧑 Создание пользователя
 RUN useradd -ms /bin/bash $USER && echo "$USER ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
