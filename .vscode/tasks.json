@@ -2,26 +2,38 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Gowin: Synthesis + FloorPlanner",
+            "label": "Gowin: Ensure Container Running",
             "type": "shell",
+            "command": "${workspaceFolder}/vscode-start-gowin-container.sh",
+            "problemMatcher": [],
+            "group": "none"
+        },
+        {
+            "label": "Gowin: Synthesis + FloorPlanner (exec)",
+            "type": "shell",
+            "dependsOn": "Gowin: Ensure Container Running",
             "command": "docker",
             "args": [
-                "run", "--rm", "-t",
-                "-e", "DISPLAY=${DISPLAY}", "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
-                "-v", "${workspaceFolder}:/home/gowin/work",
-                "gowin-docker",
-                "bash", "-c", "xvfb-run /home/gowin/IDE/bin/gw_sh work.prj"
-                // "/home/gowin/IDE/bin/gw_sh", // путь до gw_sh внутри контейнера
-                // "work.prj" // имя вашего проектного файла, например
-              ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
+                "exec",
+                "-u", "gowin",
+                "gowin-build",
+                "bash", "-c", "xvfb-run -a /home/gowin/IDE/bin/gw_sh /home/gowin/work/work.prj"
+            ],
+            "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "problemMatcher": []
+            }
+        },
+        {
+            "label": "Gowin: Stop Container",
+            "type": "shell",
+            "command": "docker",
+            "args": [
+                "rm", "-f", "gowin-build"
+            ],
+            "problemMatcher": [],
+            "group": "none"
         }
     ]
 }

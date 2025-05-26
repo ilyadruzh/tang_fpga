@@ -1,0 +1,5 @@
+set_device GW2A-LV18PG256C8/I7
+set_option top blinky
+add_file /home/gowin/work/src/blinky.v
+# add_file src/blinky.cst   ;# если есть .cst
+run all

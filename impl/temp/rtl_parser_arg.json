@@ -2,7 +2,7 @@
  "Device" : "GW2A-18C",
  "Files" : [
   {
-   "Path" : "/home/gowin/work/src/led.v",
+   "Path" : "/home/gowin/work/src/blinky.v",
    "Type" : "verilog"
   }
  ],
